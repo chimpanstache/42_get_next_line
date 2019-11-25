@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ehafidi <ehafidi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/17 17:11:36 by ehafidi           #+#    #+#             */
-/*   Updated: 2019/11/20 12:49:26 by ehafidi          ###   ########.fr       */
+/*   Created: 2019/11/22 15:01:57 by ehafidi           #+#    #+#             */
+/*   Updated: 2019/11/25 17:49:41 by ehafidi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,90 +17,65 @@
 #include <stdio.h>
 #include <unistd.h>
 #include "get_next_line.h"
- 
-static char		ft_free(char **line)
-{
-	free(*line);
-	return (-1);
-}
 
-static int 		ft_check_nl(char *line)
+static int 		ft_check_nl(char *str)
 {
 	int i;
 
 	i = 0;
-	while (line[i])
+	if (!str)
+		return (-1);
+	while (str[i])
 	{
-		//printf("%d%s\n", i, "icinl");
-		if (line[i] == '\n')
-		{
-			//printf("%d\n", i);
+		if (str[i] == '\n')
 			return (i);
-		}
 		i++;
 	}
 	 return (-1);
 }
 
-/*char 	ft_put_subbuf(int fd, char **line, static char bordel)
+char		*ft_readline(char *line, int fd)
 {
-	line = ft_strjoin(line, bordel);
+	char *buf;
+	int ret;
 
-}*/
+	if (!(buf = malloc(sizeof(*buf) * (BUFFER_SIZE+ 1))))
+		return (NULL);	
+	while ((ret = read(fd, buf, BUFFER_SIZE)) > 0)	
+	{
+		buf[ret] = '\0';
+		if (!(line = ft_strjoin(line, buf)))
+			return (NULL);		
+		if (ft_check_nl(line) >= 0)
+			break ;
+	}
+	if (ret < 0)
+		return (NULL);
+	free(buf);
+	return (line);
+}
 
 int 			get_next_line(int fd, char **line)
-{	
-	char buf[BUFFER_SIZE + 1];
-	int nl;
-	int ret;
-	int i;
-	static char *bordel;
-	
-	i = 0;
-
-	if (fd < 0 || *line == 0 || line == 0)
-		return (-1);
-	ret = 1;
-	if (bordel)
-	{
-		free (*line);
-		if (!(*line = ft_strjoin(*line, bordel)))
-			return (-1);
-	}
-	while (ret > 0)
-	{	
-		ret = read(fd, buf, BUFFER_SIZE);
-		buf[ret] = '\0';
-		if (!(*line = ft_strjoin(*line, buf)))  
-			return (ft_free(line));
-		nl = ft_check_nl(*line);
-		if (nl >= 0)
-		{
-			if (!(*line = ft_substr(*line, 0, nl)))
-				return (ft_free(line));		
-			while (buf[i] != '\n') // a partir de la c'est pour ajouter notre residu de buffer a notre prochain line.
-				i++;
-			bordel = ft_substr(buf, i, BUFFER_SIZE - i);
-			return (1);
-		}
-	}		
-	return (0);
-}
-
-
-int 	main()
 {
-	char *line;
-	int fd;
+	static char *rest = 0;
+	int nl;
 
-	fd = open("shakeitoff", O_RDONLY);
-	printf("%d\n", get_next_line(fd, &line));
-	printf("%s\n", line);
-	printf("%d\n", get_next_line(fd, &line));
-	printf("%s\n", line);
-	printf("%d\n", get_next_line(fd, &line));
-	printf("%s\n", line);
-	printf("%d\n", get_next_line(fd, &line));
-	printf("%s\n", line);
+	if (fd < 0 || line == 0 || BUFFER_SIZE < 1)
+		return (-1);
+	if (!(*line = ft_strdup(rest)))
+		return (-1);			
+	if (!(*line = ft_readline(*line, fd)))
+		return (-1);
+	if ((nl = ft_check_nl(*line)) >= 0 || (ft_check_nl(rest)) >= 0)
+	{
+		free(rest);
+		if (!(rest = ft_strdup(*line + nl + 1)))
+			return (-1);
+		if (!(*line = ft_substr(*line, 0, nl))) 
+			return (-1);	
+		return (1);
+	}
+	rest[0] = '\0';
 	return (0);
 }
+

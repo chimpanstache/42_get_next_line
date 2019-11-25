@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*    get_next_line_utils.c                             :+:      :+:    :+:   */
+/*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ehafidi <ehafidi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 14:37:35 by ehafidi           #+#    #+#             */
-/*   Updated: 2019/11/19 14:51:52 by ehafidi          ###   ########.fr       */
+/*   Updated: 2019/11/25 17:14:42 by ehafidi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,7 @@ void        *ft_memcpy(void *dest, const void *src, size_t n)
 	src1 = (char *)src;
 	while (n > 0)
 	{
-		if (*dest1 != *src1)
-			*dest1 = *src1;
+		*dest1 = *src1;
 		dest1++;
 		src1++;
 		n--;
@@ -35,19 +34,25 @@ void        *ft_memcpy(void *dest, const void *src, size_t n)
 char        *ft_strdup(const char *s)
 {
 	char *copy;
-	char *start;
+	int i;
 
+	i = 0;
+	if (!s)
+	{
+		if (!(copy = (char *)malloc(sizeof(*copy) * (1))))
+			return (NULL);
+		copy[i] = '\0';
+		return(copy);
+	}
 	if (!(copy = (char *)malloc(sizeof(*copy) * (ft_strlen(s) + 1))))
 		return (NULL);
-	start = copy;
-	while (*s)
+	while (s[i])
 	{
-		*copy = *s;
-		copy++;
-		s++;
+		copy[i] = s[i];
+		i++;
 	}
-	*copy = '\0';
-	return (start);
+	copy[i] = '\0';
+	return (copy);
 }
 
 char        *ft_strjoin(char const *s1, char const *s2)
@@ -67,12 +72,13 @@ char        *ft_strjoin(char const *s1, char const *s2)
 	ft_memcpy(arr, s1, s1_l);
 	ft_memcpy(arr + s1_l, s2, s2_l);
 	arr[s1_l + s2_l] = '\0';
+	free((char *)s1);
 	return (arr);
 }
 
-size_t      ft_strlen(const char *str)
+size_t     ft_strlen(const char *str)
 {
-	size_t i;
+	int i;
 
 	i = 0;
 	while (*str)
@@ -102,5 +108,6 @@ char        *ft_substr(char const *s, unsigned int start, size_t len)
 		start++;
 	}
 	arr[i] = '\0';
+	free((char *)s);
 	return (arr);
 }
