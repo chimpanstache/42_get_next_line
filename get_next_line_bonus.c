@@ -6,11 +6,11 @@
 /*   By: ehafidi <ehafidi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/26 14:02:12 by ehafidi           #+#    #+#             */
-/*   Updated: 2019/11/28 19:11:09 by ehafidi          ###   ########.fr       */
+/*   Updated: 2019/11/29 13:24:47 by ehafidi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char	*ft_strcpy(char *dest, char *src)
 {
@@ -75,7 +75,7 @@ int		get_next_line(int fd, char **line)
 	static char rest[OPEN_MAX][BUFFER_SIZE + 1];
 	int			nl;
 
-	if (fd < 0 || line == 0 || BUFFER_SIZE < 1)
+	if (fd < 0 || line == 0 || BUFFER_SIZE < 1 || fd > OPEN_MAX)
 		return (-1);
 	if (!(*line = ft_strdup(rest[fd])))
 		return (-1);

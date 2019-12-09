@@ -6,11 +6,11 @@
 /*   By: ehafidi <ehafidi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/26 14:03:02 by ehafidi           #+#    #+#             */
-/*   Updated: 2019/11/28 19:14:36 by ehafidi          ###   ########.fr       */
+/*   Updated: 2019/11/29 12:52:34 by ehafidi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 void		*ft_memcpy(void *dest, const void *src, size_t n)
 {

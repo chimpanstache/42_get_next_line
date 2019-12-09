@@ -6,7 +6,7 @@
 /*   By: ehafidi <ehafidi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 17:07:02 by ehafidi           #+#    #+#             */
-/*   Updated: 2019/11/28 19:10:34 by ehafidi          ###   ########.fr       */
+/*   Updated: 2019/11/29 13:23:40 by ehafidi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int		get_next_line(int fd, char **line)
 	static char rest[OPEN_MAX][BUFFER_SIZE + 1];
 	int			nl;
 
-	if (fd < 0 || line == 0 || BUFFER_SIZE < 1)
+	if (fd < 0 || line == 0 || BUFFER_SIZE < 1 || fd > OPEN_MAX)
 		return (-1);
 	if (!(*line = ft_strdup(rest[fd])))
 		return (-1);

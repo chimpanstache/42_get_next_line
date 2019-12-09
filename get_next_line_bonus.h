@@ -6,18 +6,14 @@
 /*   By: ehafidi <ehafidi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/26 14:26:40 by ehafidi           #+#    #+#             */
-/*   Updated: 2019/11/28 19:12:01 by ehafidi          ###   ########.fr       */
+/*   Updated: 2019/11/29 13:04:28 by ehafidi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_BONUS_H
 # define GET_NEXT_LINE_BONUS_H
 
-# include <sys/types.h>
-# include <sys/stat.h>
-# include <fcntl.h>
 # include <stdlib.h>
-# include <stdio.h>
 # include <unistd.h>
 # include <limits.h>
 # include <string.h>
