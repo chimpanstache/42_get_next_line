@@ -5,5 +5,6 @@ The return values are:
 * -1 if an error happened.
 * 0 if nothing has been read, or EOF has been reached.
 * 1 if a line has been read.
+
 More details are available in the subject attached.
  
